@@ -8,14 +8,11 @@ part 'workouts_event.dart';
 part 'workouts_state.dart';
 
 class WorkoutsBloc extends Bloc<WorkoutsEvent, WorkoutsState> {
-  WorkoutsBloc() : super(WorkoutsInitial());
+  WorkoutsBloc() : super(WorkoutsInitial()) {
+    on<CardTappedEvent>(_onCardTapped);
+  }
 
-  @override
-  Stream<WorkoutsState> mapEventToState(
-    WorkoutsEvent event,
-  ) async* {
-    if (event is CardTappedEvent) {
-      yield CardTappedState(workout: event.workout);
-    }
+  void _onCardTapped(CardTappedEvent event, Emitter<WorkoutsState> emit) {
+    emit(CardTappedState(workout: event.workout));
   }
 }
