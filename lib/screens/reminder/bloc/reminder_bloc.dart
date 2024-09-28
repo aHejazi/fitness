@@ -36,10 +36,9 @@ class ReminderBloc extends Bloc<ReminderEvent, ReminderState> {
       DateTime dateTime, int? dayTime) async {
     final flutterNotificationsPlugin = FlutterLocalNotificationsPlugin();
     final androidPlatformChannelSpecifics = AndroidNotificationDetails(
-        'your other channel id',
-        'your other channel name',
-        'your other channel description');
-    final iOSPlatformChannelSpecifics = IOSNotificationDetails();
+        'your_channel_id', 'Your Channel Name',
+        channelDescription: 'Your channel description');
+    final iOSPlatformChannelSpecifics = DarwinNotificationDetails();
     NotificationDetails platformChannelSpecifics = NotificationDetails(
         android: androidPlatformChannelSpecifics,
         iOS: iOSPlatformChannelSpecifics);

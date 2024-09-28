@@ -9,48 +9,56 @@ part 'sign_in_event.dart';
 part 'sign_in_state.dart';
 
 class SignInBloc extends Bloc<SignInEvent, SignInState> {
-  SignInBloc() : super(SignInInitial());
+  SignInBloc() : super(SignInInitial()) {
+    on<OnTextChangeEvent>(_onTextChanged);
+    on<SignInTappedEvent>(_onSignInTapped);
+    on<ForgotPasswordTappedEvent>(_onForgotPasswordTapped);
+    on<SignUpTappedEvent>(_onSignUpTapped);
+  }
 
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
 
   bool isButtonEnabled = false;
 
-  @override
-  Stream<SignInState> mapEventToState(
-    SignInEvent event,
-  ) async* {
-    if (event is OnTextChangeEvent) {
-      if (isButtonEnabled != _checkIfSignInButtonEnabled()) {
-        isButtonEnabled = _checkIfSignInButtonEnabled();
-        yield SignInButtonEnableChangedState(isEnabled: isButtonEnabled);
-      }
-    } else if (event is SignInTappedEvent) {
-      if (_checkValidatorsOfTextField()) {
-        try {
-          yield LoadingState();
-          await AuthService.signIn(emailController.text, passwordController.text);
-          yield NextTabBarPageState();
-          print("Go to the next page");
-        } catch (e) {
-          print('E to tstrng: ' + e.toString());
-          yield ErrorState(message: e.toString());
-        }
-      } else {
-        yield ShowErrorState();
-      }
-    } else if (event is ForgotPasswordTappedEvent) {
-      yield NextForgotPasswordPageState();
-    } else if (event is SignUpTappedEvent) {
-      yield NextSignUpPageState();
+  void _onTextChanged(OnTextChangeEvent event, Emitter<SignInState> emit) {
+    if (isButtonEnabled != _checkIfSignInButtonEnabled()) {
+      isButtonEnabled = _checkIfSignInButtonEnabled();
+      emit(SignInButtonEnableChangedState(isEnabled: isButtonEnabled));
     }
   }
 
+  void _onSignInTapped(
+      SignInTappedEvent event, Emitter<SignInState> emit) async {
+    if (_checkValidatorsOfTextField()) {
+      try {
+        emit(LoadingState());
+        await AuthService.signIn(emailController.text, passwordController.text);
+        emit(NextTabBarPageState());
+      } catch (e) {
+        emit(ErrorState(message: e.toString()));
+      }
+    } else {
+      emit(ShowErrorState());
+    }
+  }
+
+  void _onForgotPasswordTapped(
+      ForgotPasswordTappedEvent event, Emitter<SignInState> emit) {
+    emit(NextForgotPasswordPageState());
+  }
+
+  void _onSignUpTapped(SignUpTappedEvent event, Emitter<SignInState> emit) {
+    emit(NextSignUpPageState());
+  }
+
   bool _checkIfSignInButtonEnabled() {
-    return emailController.text.isNotEmpty && passwordController.text.isNotEmpty;
+    return emailController.text.isNotEmpty &&
+        passwordController.text.isNotEmpty;
   }
 
   bool _checkValidatorsOfTextField() {
-    return ValidationService.email(emailController.text) && ValidationService.password(passwordController.text);
+    return ValidationService.email(emailController.text) &&
+        ValidationService.password(passwordController.text);
   }
 }

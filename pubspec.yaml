@@ -25,50 +25,51 @@ dependencies:
     sdk: flutter
   
   #BloC  
-  flutter_bloc: ^7.0.1
+  flutter_bloc: ^8.1.3
 
   # Firebase
-  firebase_core: ^1.4.0
-  firebase_auth: ^3.0.1
-  firebase_storage: ^10.0.1
+  firebase_core: ^3.6.0
+  firebase_auth: ^5.3.1
+  firebase_storage: ^12.3.2
 
 
   # IOS Icons
-  cupertino_icons: ^1.0.2
+  cupertino_icons: ^1.0.5
 
   # Page View dots indicator
-  dots_indicator: ^2.0.0
+  dots_indicator: ^3.0.0
 
   # Percent circle
-  percent_indicator: ^3.0.1
+  percent_indicator: ^4.2.3
 
   # URL launcher
-  url_launcher: ^6.0.9
+  url_launcher: ^6.1.14
 
   # Workout Details sliding up panel
   sliding_up_panel: ^2.0.0+1
 
   # Video player
-  video_player: ^2.1.12
-  chewie: 
-    git:
-      url: git@github.com:v1nnk1/chewie.git
+  video_player: ^2.9.1
+  chewie: ^1.8.5
+  # chewie: 
+  #   git:
+  #     url: git@github.com:v1nnk1/chewie.git
 
 
   # Countdown timer
-  custom_timer: ^0.0.6
+  custom_timer: ^0.2.3
 
   # Image library
-  image_picker: ^0.8.2
+  image_picker: ^1.0.4
 
   # Reminder notification
-  flutter_local_notifications: ^8.0.0
+  flutter_local_notifications: ^17.2.3
 
   # Native timezone
   flutter_native_timezone: ^2.0.0
 
   # Permission handler
-  permission_handler: ^8.1.4+2
+  permission_handler: ^11.3.1
 
 dev_dependencies:
   flutter_test:
